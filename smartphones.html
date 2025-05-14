@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartphones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .product-list { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 40px; }
+        .product-card { border: 1px solid #ddd; border-radius: 8px; background: #fff; width: 300px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 24px; text-align: center; transition: box-shadow 0.2s; }
+        .product-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .product-card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 16px; }
+        .product-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+        .product-price { color: #2563eb; font-size: 1.1rem; font-weight: 500; margin-bottom: 12px; }
+        .product-desc { color: #555; font-size: 0.95rem; margin-bottom: 16px; }
+        .buy-btn { background: #2563eb; color: #fff; border: none; padding: 10px 24px; border-radius: 6px; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        .buy-btn:hover { background: #1e40af; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center; margin-top:32px; font-size:2rem;">Smartphones</h1>
+    <div class="product-list">
+        <!-- Paste your smartphone product card(s) here -->
+        <div class="product-card">
+            <div class="carousel" style="position:relative; width:100%; height:180px; margin-bottom:16px;">
+                <img class="carousel-img" src="https://i.postimg.cc/kG7LT1xf/7575.png" alt="Printed D1" style="width:100%; height:180px; object-fit:contain; display:block;">
+                <img class="carousel-img" src="https://i.postimg.cc/QtQRkGWF/222.png" alt="Printed D1" style="width:100%; height:180px; object-fit:contain; display:none;">
+                <img class="carousel-img" src="https://i.postimg.cc/QtQRkGWF/222.png" alt="Printed D1" style="width:100%; height:180px; object-fit:contain; display:none;">
+                <button class="carousel-prev" style="position:absolute; top:50%; left:8px; transform:translateY(-50%); background:#fff; border:none; border-radius:50%; width:32px; height:32px; cursor:pointer;">&#8592;</button>
+                <button class="carousel-next" style="position:absolute; top:50%; right:8px; transform:translateY(-50%); background:#fff; border:none; border-radius:50%; width:32px; height:32px; cursor:pointer;">&#8594;</button>
+            </div>
+            <div class="product-title">Printed D1</div>
+            <div class="product-price">$78</div>
+            <div class="product-desc">Stylish printed t-shirt with unique ethnic pattern.</div>
+            <button class="buy-btn">Buy Now</button>
+        </div>
+        <script>
+        // Carousel with touch swipe support
+        const card = document.querySelector('.product-card:last-child');
+        const imgs = card.querySelectorAll('.carousel-img');
+        const prev = card.querySelector('.carousel-prev');
+        const next = card.querySelector('.carousel-next');
+        let idx = 0;
+        function showImg(i) {
+            imgs.forEach((img, j) => img.style.display = j === i ? 'block' : 'none');
+        }
+        prev.onclick = () => { idx = (idx - 1 + imgs.length) % imgs.length; showImg(idx); };
+        next.onclick = () => { idx = (idx + 1) % imgs.length; showImg(idx); };
+        showImg(idx);
+        // Touch swipe support
+        let startY = null;
+        card.querySelector('.carousel').addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+        });
+        card.querySelector('.carousel').addEventListener('touchend', function(e) {
+            if (startY === null) return;
+            let endY = e.changedTouches[0].clientY;
+            if (startY - endY > 30) { // swipe up
+                next.click();
+            } else if (endY - startY > 30) { // swipe down
+                prev.click();
+            }
+            startY = null;
+        });
+        </script>
+    </div>
+</body>
+</html>
